@@ -7,6 +7,4 @@ import org.apache.ibatis.annotations.Mapper;
 // mybatis增强版，实现该接口即可实现对应的基本方法
 @Mapper
 public interface ProductMapper extends BaseMapper<Products> {
-
-  public void mytest2();
 }
