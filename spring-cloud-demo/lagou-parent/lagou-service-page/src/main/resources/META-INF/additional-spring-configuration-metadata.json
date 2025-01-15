@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "hystrix.command.default.circuitBreaker.errorThresholdPercentage",
+      "type": "java.lang.String",
+      "description": "Description for hystrix.command.default.circuitBreaker.errorThresholdPercentage."
+    },
+    {
+      "name": "lagou-service-product.ribbon.NFLoadBalancerRuleClassName",
+      "type": "java.lang.String",
+      "description": "Description for lagou-service-product.ribbon.NFLoadBalancerRuleClassName."
+    },
+    {
+      "name": "hystrix.command.default.fallbackMethod",
+      "type": "java.lang.String",
+      "description": "Description for hystrix.command.default.fallbackMethod."
+    }
+  ] }

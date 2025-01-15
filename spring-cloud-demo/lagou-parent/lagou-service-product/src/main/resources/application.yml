@@ -1,0 +1,21 @@
+server:
+  port: 9000 # 后期该微服务多实例
+spring:
+  application:
+    name: lagou-service-product
+  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/spring_clould_demo?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: root
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://LagouCloudEurekaServerA:9200/eureka/,http://LagouCloudEurekaServerB:9201/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipaddress}:${spring.application.name}:${server.port}:@project.version@
+    metadata-map:
+      user: lb

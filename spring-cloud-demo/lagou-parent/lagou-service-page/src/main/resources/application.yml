@@ -1,0 +1,65 @@
+server:
+  port: 9100
+spring:
+  application:
+    name: lagou-service-page
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring_clould_demo?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: root
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://LagouCloudEurekaServerA:9200/eureka/,http://LagouCloudEurekaServerB:9201/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipaddress}:${spring.application.name}:${server.port}:@project.version@
+
+lagou-service-product:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #随机策略
+
+# 配置熔断策略
+hystrix:
+  command:
+    default:
+      circuitBreaker:
+        # 强制打开熔断器：true，断路器打开，拒绝所有请求，默认false
+        forceOpen: false
+        # 熔断触发最小请求次数，默认值是20
+        requestVolumeThreshold: 2
+        # 触发熔断错误比例阈值，默认50%
+        errorThresholdPercentage: 20
+        # 熔断后休眠时长，默认值5秒
+        sleepWindowInMilliseconds: 3000
+      execution:
+        isolation:
+          thread:
+            # 熔断超时设置 默认1秒
+            timeoutInMilliseconds: 2000
+      fallbackMethod: myFallBack
+
+# springboot中暴露健康检查等断点接口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  # 暴露健康接口的细节
+  endpoint:
+    health:
+      show-details: always
+
+# 开启Feign的熔断功能
+feign:
+  hystrix:
+    enabled: true
+  # 开启请求和响应压缩
+  compression:
+    request:
+      enabled: true # 默认不开启
+      mime-types: text/html,application/xml,application/json # 设置压缩的数据类型，此处也是默认值
+      min-request-size: 2048 # 设置触发压缩的大小下限，此处是默认值
+    response:
+      enabled: true # 默认不开启
